@@ -152,7 +152,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 			
 			if(restartGame) {
 				this.restartGame = false;
-				this.gameState = "NORMAL";
+				Game.gameState = "NORMAL";
 				CUR_LEVEL = 1;
 				String newWorld = "level"+CUR_LEVEL+".png";
 				//System.out.println(newWorld);
@@ -248,6 +248,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+
+		if (e.getKeyCode() == KeyEvent.VK_Z) {
+			player.jump = true;
+		}
+
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT ||
 				e.getKeyCode() == KeyEvent.VK_D){
 			player.right = true;
@@ -272,7 +277,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 			
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_X){
+		if(e.getKeyCode() == KeyEvent.VK_K){
 			player.shoot = true;
 		}
 		
@@ -312,19 +317,19 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// ...
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		// ...
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		// ...
 		
 	}
 
