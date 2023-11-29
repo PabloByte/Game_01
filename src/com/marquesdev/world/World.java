@@ -21,6 +21,7 @@ public class World {
 	public static Tile[] tiles;
 	public static int WIDTH,HEIGHT;
 	public static final int TILE_SIZE = 16;
+
 	
 	
 	public World(String path){
@@ -93,7 +94,9 @@ public class World {
 		return !((tiles[x1 + (y1*World.WIDTH)] instanceof WallTile) ||
 				(tiles[x2 + (y2*World.WIDTH)] instanceof WallTile) ||
 				(tiles[x3 + (y3*World.WIDTH)] instanceof WallTile) ||
-				(tiles[x4 + (y4*World.WIDTH)] instanceof WallTile));
+				(tiles[x4 + (y4*World.WIDTH)] instanceof WallTile)); 
+		
+		
 	}
 	
 	public static void restartGame(String level){
