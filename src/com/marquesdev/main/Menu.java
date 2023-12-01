@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Menu {
 
@@ -39,6 +42,38 @@ public class Menu {
 				System.exit(1);
 			}
 		}
+	}
+
+	
+
+	public static void saveGame(String[] val1, int[] val2, int encode){
+
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter("save.txt"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		for(int i = 0; i < val1.length; i++){
+			String current = val1[i];
+			current+="";
+			char[] value = Integer.toString(val2[i]).toCharArray();
+			for(int n = 0; n < value.length; n++){
+				value[n]+=encode;
+				current+=value[n];
+			}
+			try {
+				writer.write(current);
+				if (i < val1.length); 
+					writer.newLine();
+			} catch (IOException e){}
+			
+		}
+		try {
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {}
 	}
 	
 	public void render(Graphics g) {
