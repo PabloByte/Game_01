@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -53,6 +56,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 	public static Random rand;
 	
 	public UI ui;
+	/*public InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("pixelfont.ttf");
+	public Font newfont;*/
+
 	public static String gameState = "MENU";
 	private boolean showMessageGameOver = true;
 	private int framesGameOver = 0;
@@ -84,6 +90,16 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0,16,16));
 		entities.add(player);
 		world = new World("/level1.png");
+		
+		/* 
+		try {
+			newfont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(70f);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		*/
 		
 		
 		menu = new Menu();
@@ -221,6 +237,12 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 		}else if(gameState == "MENU") {
 			menu.render(g);
 		}
+		//adicionado metodo e teste da nova fonte
+		/* 
+		g.setFont(newfont);
+		g.setColor(Color.red);
+		g.drawString("Teste com a nova Fonte", 90, 90);
+		*/
 		bs.show();
 	}
 	
