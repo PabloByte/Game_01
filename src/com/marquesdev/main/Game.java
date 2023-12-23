@@ -57,6 +57,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public static Random rand;
 	
 	public UI ui;
+
+	public int xx,yy;
+
 	/*public InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream("pixelfont.ttf");
 	public Font newfont;*/
 
@@ -66,8 +69,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean restartGame = false;
 	
 	public Menu menu;
-	public static int[] pixels;
-	public static int[] lightMap;
+	public int[] pixels;
 
 	public boolean saveGame = false;
 	
@@ -83,7 +85,6 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		initFrame();
 		//Inicializando objetos.
 		ui = new UI();
-		lightMap = new int[WIDTH*HEIGHT];
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		pixels =((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 		entities = new ArrayList<Entity>();
@@ -192,13 +193,17 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		}
 	}
 	
-
-	
-
-	
-	
-	
-	
+	public void drawRectangleExample(int xoff, int yoff){
+		for(int xx = 0; xx < 32; xx++){
+			for(int yy = 0; yy < 32; yy++){
+				int xOff = xx + xoff;
+				int yOff = yy + yoff;
+				if(xOff < 0 || yOff < 0 || xOff >= WIDTH || yOff >= HEIGHT)
+					continue;
+				pixels[xOff + (yOff*WIDTH)] = 0xff0000;
+			}
+		}
+	}
 	
 	public void render(){
 		BufferStrategy bs = this.getBufferStrategy();
