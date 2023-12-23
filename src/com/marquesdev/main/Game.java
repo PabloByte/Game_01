@@ -4,18 +4,19 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
+//import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.io.IOException;
-import java.io.InputStream;
+//import java.io.IOException;
+//import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,7 +31,7 @@ import com.marquesdev.graficos.Spritesheet;
 import com.marquesdev.graficos.UI;
 import com.marquesdev.world.World;
 
-public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
+public class Game extends Canvas implements Runnable,KeyListener,MouseListener,MouseMotionListener{
 
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
@@ -70,11 +71,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 
 	public boolean saveGame = false;
 	
+	public int mx,my;
+
 	public Game(){
 		//Sound.musicBackground.loop();
 		rand = new Random();
 		addKeyListener(this);
 		addMouseListener(this);
+		addMouseMotionListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		//Inicializando objetos.
@@ -155,7 +159,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 		}
 		
 		if(enemies.size() == 0) {
-			//Avan�ar para o pr�ximo level!
+			//Avancar para o proximo level!
 			CUR_LEVEL++;
 			if(CUR_LEVEL > MAX_LEVEL){
 				CUR_LEVEL = 1;
@@ -206,7 +210,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0,WIDTH,HEIGHT);
 		
-		/*Renderiza��o do jogo*/
+		/*Renderizacao do jogo*/
 		//Graphics2D g2 = (Graphics2D) g;
 		world.render(g);
 		for(int i = 0; i < entities.size(); i++) {
@@ -237,6 +241,17 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 		}else if(gameState == "MENU") {
 			menu.render(g);
 		}
+		
+		// teste de metodo de rotacao de objetos com o mouse
+		/*
+		Graphics2D g2 = (Graphics2D) g;
+		double angleMouse = Math.atan2( 200+25 - my, 200+25 - mx);
+		g2.rotate(angleMouse, 200+25, 200+25);
+		System.out.println(angleMouse);
+		g.setColor(Color.red);
+		g.fillRect(200, 200, 50, 50);
+		*/
+
 		//adicionado metodo e teste da nova fonte
 		/* 
 		g.setFont(newfont);
@@ -388,6 +403,16 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener{
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		this.mx = e.getX();
+		this.my = e.getY();
 	}
 
 	

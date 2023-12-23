@@ -39,6 +39,9 @@ public class Enemy extends Entity{
 		maskw = 5;
 		maskh = 5;
 		*/
+		if (this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 80) {
+			
+		
 		if(isColiddingWithPlayer() == false){
 		if((int)x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())
 				&& !isColidding((int)(x+speed), this.getY())){
@@ -67,7 +70,9 @@ public class Enemy extends Entity{
 			}
 			
 		}
-		
+		} else{
+			//adicionar metodo para o enenmigo quando ele não estiver no raio de detecção do player!
+		}
 		
 			frames++;
 			if(frames == maxFrames) {
