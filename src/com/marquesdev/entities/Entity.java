@@ -4,6 +4,7 @@ package com.marquesdev.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
 import java.util.List;
 
 import com.marquesdev.main.Game;
@@ -28,6 +29,8 @@ public class Entity {
 	protected int z;
 	protected int width;
 	protected int height;
+
+	public int depht;
 	
 	protected List<Node> path;
 
@@ -49,6 +52,18 @@ public class Entity {
 		this.mwidth = width;
 		this.mheight = height;
 	}
+
+	public static Comparator<Entity> nodeSorter = new Comparator<Entity>(){
+
+        @Override
+        public int compare(Entity n0, Entity n1){
+            if(n1.depht < n0.depht)
+                return +1;
+            if(n1.depht > n0.depht)
+                return - 1;
+            return 0;
+        }  
+    };
 	
 	public void setMask(int maskx,int masky,int mwidth,int mheight){
 		this.maskx = maskx;

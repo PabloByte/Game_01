@@ -73,6 +73,7 @@ public class Enemy extends Entity{
 			//adicionar metodo para o enenmigo quando ele não estiver no raio de detecção do player!
 		}
 		*/
+		depht = 0;
 		maskx = 5;
 		masky = 5;
 		mwidth = 8;

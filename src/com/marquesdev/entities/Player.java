@@ -64,7 +64,7 @@ public class Player extends Entity{
 	}
 	
 	public void tick(){
-
+		depht = 1;
 		if (jump) {
 			if (isjumping == false) {
 				jump = false;
