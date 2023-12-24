@@ -4,6 +4,7 @@ package com.marquesdev.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import com.marquesdev.main.Game;
 //import com.marquesdev.main.Sound;
@@ -72,14 +73,32 @@ public class Enemy extends Entity{
 			//adicionar metodo para o enenmigo quando ele não estiver no raio de detecção do player!
 		}
 		*/
+		maskx = 5;
+		masky = 5;
+		mwidth = 8;
+		mheight = 8;
 
-		if (path == null || path.size() == 0) {
-			Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
-			Vector2i end = new Vector2i((int)(Game.player.x/16), (int)(Game.player.y/16));
-			path = AStar.findPath(Game.world, start, end);
+		if (!isColiddingWithPlayer()) {
+			if (path == null || path.size() == 0) {
+				Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
+				Vector2i end = new Vector2i((int)(Game.player.x/16), (int)(Game.player.y/16));
+				path = AStar.findPath(Game.world, start, end);
+			}	
+		}else {
+			if (new Random().nextInt(100) < 5) {
+				//Sound.hurtEffect.play();
+				Game.player.life-=Game.rand.nextInt(4);
+				Game.player.isDamaged = true;
+			}
 		}
-			followPath(path);
-		
+			if(new Random().nextInt(100) < 75)
+				followPath(path);
+			if(new Random().nextInt(100) < 5){
+				Vector2i start = new Vector2i((int)(x/16),(int)(y/16));
+				Vector2i end = new Vector2i((int)(Game.player.x/16), (int)(Game.player.y/16));
+				path = AStar.findPath(Game.world, start, end);
+			}
+			
 			frames++;
 			if(frames == maxFrames) {
 				frames = 0;
@@ -138,7 +157,7 @@ public class Enemy extends Entity{
 		else
 			g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x,this.getY() - Camera.y,null);
 		//g.setColor(Color.blue);
-		//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw,maskh);
+		//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, mwidth,mheight);
 	}
 	
 	
