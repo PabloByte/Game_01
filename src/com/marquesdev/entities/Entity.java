@@ -1,12 +1,15 @@
 package com.marquesdev.entities;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import com.marquesdev.main.Game;
 import com.marquesdev.world.Camera;
+import com.marquesdev.world.Node;
+import com.marquesdev.world.Vector2i;
 
 public class Entity {
 	
@@ -26,6 +29,8 @@ public class Entity {
 	protected int width;
 	protected int height;
 	
+	protected List<Node> path;
+
 	public boolean debug = false;
 	
 	private BufferedImage sprite;
@@ -83,6 +88,46 @@ public class Entity {
 	public double calculateDistance(int x1,int y1,int x2,int y2){
 		return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	}
+
+	public boolean isColidding(int xnext,int ynext){
+		Rectangle enemyCurrent = new Rectangle(xnext + maskx,ynext + masky,mwidth,mheight);
+		for(int i =0; i < Game.enemies.size(); i++){
+			Enemy e = Game.enemies.get(i);
+			if(e == this)
+				continue;
+			Rectangle targetEnemy = new Rectangle(e.getX()+ maskx,e.getY()+ masky,mwidth,mheight);
+			if(enemyCurrent.intersects(targetEnemy)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public void followPath(List<Node> path){
+		if (path != null) {
+			if (path.size() > 0) {
+				Vector2i target = path.get(path.size() - 1).tile;
+				//xprev = x;
+				//yprev = y;
+				if (x < target.x * 16) {
+					x++;
+				}else if (x > target.x * 16) {
+					x--;
+				}
+				
+				if (y < target.y * 16) {
+					y++;
+				}else if (y > target.y * 16) {
+					y--;
+				}
+
+				if (x == target.x * 16 && y == target.y * 16) {
+					path.remove(path.size() - 1);
+				}
+			}
+		}
+	}
 	
 	public static boolean isColidding(Entity e1,Entity e2){
 		Rectangle e1Mask = new Rectangle(e1.getX() + e1.maskx,e1.getY()+e1.masky,e1.mwidth,e1.mheight);
@@ -92,6 +137,7 @@ public class Entity {
 		}
 		return false;
 	}
+
 	
 	public void render(Graphics g) {
 		g.drawImage(sprite,this.getX() - Camera.x,this.getY() - Camera.y,null);

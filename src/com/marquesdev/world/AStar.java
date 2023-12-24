@@ -64,22 +64,22 @@ public class AStar {
                 if(tile instanceof WallTile) continue;
                 if(i == 0) {
                     Tile test = world.tiles[x+xi+1+((y+yi) * world.WIDTH)];
-                    Tile test2 = world.tiles[x+xi+1+((y+yi) * world.WIDTH)];
+                    Tile test2 = world.tiles[x+xi+((y+yi+1) * world.WIDTH)];
                     if (test instanceof WallTile || test2 instanceof WallTile) {
                         continue;
                     }
 
                 }
                 else if (i == 2) {
-                    Tile test = world.tiles[x+xi+1+((y+yi) * world.WIDTH)];
-                    Tile test2 = world.tiles[x+xi+((y+yi) * world.WIDTH)];
+                    Tile test = world.tiles[x+xi-1+((y+yi) * world.WIDTH)];
+                    Tile test2 = world.tiles[x+xi+((y+yi+1) * world.WIDTH)];
                     if (test instanceof WallTile || test2 instanceof WallTile) {
                         continue;
                     }
                 }
                 else if (i == 6) {
                     Tile test = world.tiles[x+xi+((y+yi-1) * world.WIDTH)];
-                    Tile test2 = world.tiles[x+xi+((y+yi) * world.WIDTH)];
+                    Tile test2 = world.tiles[x+xi+1+((y+yi) * world.WIDTH)];
                     if (test instanceof WallTile || test2 instanceof WallTile) {
                         continue;
                     }
