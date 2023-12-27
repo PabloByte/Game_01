@@ -176,7 +176,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		for(int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).tick();
 		}
-		
+		/* 
 		if(enemies.size() == 0) {
 			//Avancar para o proximo level!
 			CUR_LEVEL++;
@@ -187,6 +187,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			//System.out.println(newWorld);
 			World.restartGame(newWorld);
 		}
+		*/
 		}else if(gameState == "GAME_OVER") {
 			this.framesGameOver++;
 			if(this.framesGameOver == 30) {
