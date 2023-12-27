@@ -73,9 +73,12 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public Menu menu;
 
+	public static BufferedImage minimapa;
+
 	public int[] pixels;
 	public BufferedImage lightmap;
 	public int[] lightMapPixels;
+	public static int[] minimapPixels;
 
 	public boolean saveGame = false;
 	
@@ -119,7 +122,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		}
 		*/
 		
-		
+		minimapa = new BufferedImage(world.WIDTH, world.HEIGHT, BufferedImage.TYPE_INT_RGB);
+		minimapPixels = ((DataBufferInt)minimapa.getRaster().getDataBuffer()).getData();
+
 		menu = new Menu();
 	}
 	
@@ -275,6 +280,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		}else if(gameState == "MENU") {
 			menu.render(g);
 		}
+
+		World.renderMiniMap();
+		g.drawImage(minimapa, 585, 345,World.WIDTH*4,World.HEIGHT*4, null);
 		
 		// teste de metodo de rotacao de objetos com o mouse
 		/*
