@@ -53,6 +53,7 @@ public class Menu {
 			enter = false;
 			if(options[currentOption] == "novo jogo" || options[currentOption] == "continuar") {
 				Game.gameState = "NORMAL";
+				//Sound.music.loop();
 				pause = false;
 				file = new File("save/save.txt");
 				file.delete();

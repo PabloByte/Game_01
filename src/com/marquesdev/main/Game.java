@@ -2,11 +2,16 @@ package com.marquesdev.main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+//import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 //import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
+//import java.awt.Image;
+//import java.awt.Point;
+//import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -85,11 +90,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public int mx,my;
 
 	public Game(){
-		//Sound.musicBackground.loop();
 		rand = new Random();
 		addKeyListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		//setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		//Inicializando objetos.
@@ -131,8 +136,24 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	public void initFrame(){
 		frame = new JFrame("Game #1");
 		frame.add(this);
+		//frame.setUndecorated(true);
 		frame.setResizable(false);
 		frame.pack();
+		//icone da janela e do mouse
+		/* 
+		Image imagem = null;
+		try {
+		imagem = ImageIO.read(getClass().getResource("/icon.png"));
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image = toolkit.getImage(getClass().getResource("/icon.png"));
+		Cursor c = toolkit.createCustomCursor(image, new Point(0,0), "img");
+
+		frame.setCursor(c);
+		frame.setIconImage(imagem);
+		*/
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -264,14 +285,15 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		/***/
 		g.dispose();
 		g = bs.getDrawGraphics();
-		g.drawImage(image, 0, 0,WIDTH*SCALE,HEIGHT*SCALE,null);
+		// Aqui é onde renderizamos o jogo
+		g.drawImage(image, 0, 0,/*Toolkit.getDefaultToolkit().getScreenSize().width*/WIDTH*SCALE, /*Toolkit.getDefaultToolkit().getScreenSize().height*/HEIGHT*SCALE,null);
 		g.setFont(new Font("arial",Font.BOLD,20));
 		g.setColor(Color.white);
 		g.drawString("Municao: " + player.ammo,580,20);
 		if(gameState == "GAME_OVER") {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));
-			g2.fillRect(0, 0, WIDTH*SCALE, HEIGHT*SCALE);
+			g2.fillRect(0, 0, WIDTH*SCALE,HEIGHT*SCALE);
 			g.setFont(new Font("arial",Font.BOLD,36));
 			g.setColor(Color.white);
 			g.drawString("Game Over",(WIDTH*SCALE) / 2 - 90,(HEIGHT* SCALE) / 2 - 20);
@@ -305,6 +327,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	}
 	
 	public void run() {
+		requestFocus();
+		//Sound.music.play();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
