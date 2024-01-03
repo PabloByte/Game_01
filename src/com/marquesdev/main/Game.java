@@ -8,7 +8,7 @@ import java.awt.Font;
 //import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
+//import java.awt.Toolkit;
 //import java.awt.Image;
 //import java.awt.Point;
 //import java.awt.Toolkit;
@@ -75,10 +75,15 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	private boolean showMessageGameOver = true;
 	private int framesGameOver = 0;
 	private boolean restartGame = false;
-	
+
+	//sistema de cutscene!
+	public static int entrada = 1;
+	public static int comecar = 2;
+	public static int jogando = 3;
+	public static int estado_cena = entrada;
+	public int timeCena = 0,maxTimeCena = 60*3;
+
 	public Menu menu;
-
-
 	public static int[] lightMap;
 	public static int[] minimapPixels;
 	public static int[] pixels;
@@ -131,7 +136,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		}
 		*/
 		
-		minimapa = new BufferedImage(world.WIDTH, world.HEIGHT, BufferedImage.TYPE_INT_RGB);
+		minimapa = new BufferedImage(World.WIDTH, World.HEIGHT, BufferedImage.TYPE_INT_RGB);
 		minimapPixels = ((DataBufferInt)minimapa.getRaster().getDataBuffer()).getData();
 
 		menu = new Menu();
@@ -192,7 +197,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			Menu.saveGame(opt1,opt2,10);
 			System.out.println("Jogo Salvo! ");
 		}
-		this.restartGame = false;	
+		this.restartGame = false;
+		
+		if (Game.estado_cena == Game.jogando) {
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.tick();
@@ -200,6 +207,21 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		
 		for(int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).tick();
+		}
+		}else{
+			if (Game.estado_cena == Game.entrada) {
+				if (player.getX() < 100) {
+					player.x++;
+				}else{
+					System.out.println("Game entrada concluida!");
+					Game.estado_cena = Game.comecar;
+				}
+			}else if (Game.estado_cena == Game.comecar) {
+				timeCena++;
+				if (timeCena == maxTimeCena) {
+					Game.estado_cena = Game.jogando;
+				}
+			}
 		}
 		/* 
 		if(enemies.size() == 0) {
@@ -309,6 +331,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 			menu.render(g);
 		}
 
+		if (Game.estado_cena == Game.comecar) {
+			g.drawString("Ready...",(WIDTH*SCALE) / 2 - 90,(HEIGHT* SCALE) / 2 - 20);
+		}
+
 		World.renderMiniMap();
 		g.drawImage(minimapa, 585, 345,World.WIDTH*4,World.HEIGHT*4, null);
 		
@@ -407,7 +433,7 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			gameState = "MENU";
-			menu.pause = true;
+			Menu.pause = true;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {

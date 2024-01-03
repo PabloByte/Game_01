@@ -24,8 +24,8 @@ public class Entity {
 	public static BufferedImage GUN_LEFT = Game.spritesheet.getSprite(128+16,0,16,16);
 	public static BufferedImage GUN_DAMAGE_RIGHT = Game.spritesheet.getSprite(0,32,16,16);
 	public static BufferedImage GUN_DAMAGE_LEFT = Game.spritesheet.getSprite(16,32,16,16);
-	protected double x;
-	protected double y;
+	public double x;
+	public double y;
 	protected int z;
 	protected int width;
 	protected int height;

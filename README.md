@@ -1,8 +1,5 @@
 ## Projeto Game_01
-jogo simples feito em `Java` no `Curso de Desenvolvimento de Games`!
-
-## Obs:
-os codigos desse Repositorio seram usado para a construção de futuros projetos e para o estudo de Games engines! 
+jogo simples feito em `Java` no `Curso de Desenvolvimento de Games` e estudo de Games Engines!
 
 ## Ideias
 
@@ -25,18 +22,10 @@ os codigos desse Repositorio seram usado para a construção de futuros projetos
 ## Execução do Codigo
 ...
 
-## Atualizações futuras que serão realizadas
+## Sistemas futuros que serão implementados
 
 - sistema Fake Jump;
-... 
+- Sistema de colisão Pixel Perfect;
 
-## Refatoração do codigo, reorganização dos methodos e pastas
-
-## Refatoração e construção em libGDX posteriormente
-...
-
-## Retrabalho e adptação para o repositorio `Grafico`
-...
-
-## Mais conteúdo sera adicionado posteriormente!
-...
+## Obs:
+os codigos desse Repositorio seram usado para a construção e estudo de futuros projetos e para o desenvolvimento da minha propria engine! 
