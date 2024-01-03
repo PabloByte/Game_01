@@ -20,6 +20,10 @@ public class Tile {
 	}
 	
 	public void render(Graphics g){
+		/*if (show) {
+			g.drawImage(sprite, x - Camera.x, y - Camera.y, null);
+		}
+		*/
 		g.drawImage(sprite, x - Camera.x, y - Camera.y, null);
 	}
 
