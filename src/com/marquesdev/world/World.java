@@ -11,6 +11,7 @@ import com.marquesdev.entities.Bullet;
 import com.marquesdev.entities.Enemy;
 import com.marquesdev.entities.Entity;
 import com.marquesdev.entities.Lifepack;
+import com.marquesdev.entities.Particle;
 import com.marquesdev.entities.Player;
 import com.marquesdev.entities.Weapon;
 import com.marquesdev.graficos.Spritesheet;
@@ -128,6 +129,12 @@ public class World {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public static void generateParticles(int x, int y, int amount){
+		for (int i = 0; i < amount; i++) {
+			Game.entities.add(new Particle(x,y,1,1,null));
+		}
 	}
 	
 	public static boolean isFreeDynamic(int xnext,int ynext,int width,int height){
