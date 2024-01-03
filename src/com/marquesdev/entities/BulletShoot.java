@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.marquesdev.main.Game;
 import com.marquesdev.world.Camera;
+import com.marquesdev.world.World;
 
 public class BulletShoot extends Entity{
 
@@ -23,8 +24,13 @@ public class BulletShoot extends Entity{
 	}
 	
 	public void tick() {
+		if (World.isFreeDynamic((int)(x+(dx*spd)), (int)(y+(dy*spd)), 3, 3)) {
 		x+=dx*spd;
 		y+=dy*spd;
+		}else{
+			Game.bullets.remove(this);
+			return;
+		}
 		curLife++;
 		if(curLife == life) {
 			Game.bullets.remove(this);
