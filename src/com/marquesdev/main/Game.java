@@ -78,12 +78,14 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public Menu menu;
 
-	public static BufferedImage minimapa;
 
-	public int[] pixels;
-	public BufferedImage lightmap;
-	public int[] lightMapPixels;
+	public static int[] lightMap;
 	public static int[] minimapPixels;
+	public static int[] pixels;
+
+	public static BufferedImage minimapa;
+	public BufferedImage lightMapImg;
+	
 
 	public boolean saveGame = false;
 	
@@ -99,14 +101,9 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		initFrame();
 		//Inicializando objetos.
 		ui = new UI();
+		
+		lightMap = new int[WIDTH*HEIGHT];
 		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-		try {
-			lightmap = ImageIO.read(getClass().getResource("/lightmap.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		lightMapPixels = new int[lightmap.getWidth() * lightmap.getHeight()];
-		lightmap.getRGB(0, 0, lightmap.getWidth(), lightmap.getHeight(), lightMapPixels, 0, lightmap.getWidth());
 		pixels =((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
@@ -116,6 +113,13 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0,16,16));
 		entities.add(player);
 		world = new World("/level1.png");
+
+		try {
+			lightMapImg = ImageIO.read(getClass().getResource("/lightmap.png"));
+			lightMap = lightMapImg.getRGB(0, 0, lightMapImg.getWidth(), lightMapImg.getHeight(), null, 0, lightMapImg.getWidth());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		/* 
 		try {
@@ -248,15 +252,16 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	*/
 
 	public void applyLight(){
-		/* 
-		for (int xx = 0; xx < Game.WIDTH; xx++) {
-			for(int yy = 0; yy < Game.HEIGHT; yy++){
-				if (lightMapPixels[xx+(yy * Game.WIDTH)] == 0xffffffff) {
-					pixels[xx+(yy * Game.WIDTH)] = 0;
+		
+		for (int xx = 0; xx < WIDTH; xx++) {
+			for(int yy = 0; yy < HEIGHT; yy++){
+				if (lightMap[xx+yy*WIDTH] == 0xff000000) {
+					int pixel = Pixel.getLightBlend(pixels[xx+yy*WIDTH], 0x808080, 0);
+					pixels[xx+yy*WIDTH] = pixel;
 				}
 			}
 		}
-		*/
+		
 	}
 
 	public void render(){
