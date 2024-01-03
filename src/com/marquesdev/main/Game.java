@@ -34,6 +34,7 @@ import javax.swing.JFrame;
 import com.marquesdev.entities.BulletShoot;
 import com.marquesdev.entities.Enemy;
 import com.marquesdev.entities.Entity;
+import com.marquesdev.entities.Npc;
 import com.marquesdev.entities.Player;
 import com.marquesdev.graficos.Spritesheet;
 import com.marquesdev.graficos.UI;
@@ -96,6 +97,8 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 	
 	public int mx,my;
 
+	public Npc npc;
+
 	public Game(){
 		rand = new Random();
 		addKeyListener(this);
@@ -118,6 +121,10 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 		player = new Player(0,0,16,16,spritesheet.getSprite(32, 0,16,16));
 		entities.add(player);
 		world = new World("/level1.png");
+
+		npc = new Npc(32, 32, 16, 16, spritesheet.getSprite(32, 32, 16, 16));
+
+		entities.add(npc);
 
 		try {
 			lightMapImg = ImageIO.read(getClass().getResource("/lightmap.png"));
@@ -446,6 +453,11 @@ public class Game extends Canvas implements Runnable,KeyListener,MouseListener,M
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			npc.showMessage = false;
+		}
+
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT ||
 				e.getKeyCode() == KeyEvent.VK_D){
 			player.right = false;
